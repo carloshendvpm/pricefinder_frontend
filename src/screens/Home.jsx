@@ -1,12 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
-import { styles } from './styles';
 
-export function Home() {
+export function Home({ navigation }) {
   return (
     <View>
       <Text>Home</Text>
+      <Button onPress={() => navigation.navigate('Cadastro')} title='Clique aq'/>
     </View>
   );
 }
