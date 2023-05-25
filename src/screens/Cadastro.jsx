@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 
-export default function Cadastro() {
+export default function SignupScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [cpf, setCpf] = useState('');
 
   async function handleSubmit() {
-    const response = await fetch('http://localhost:3000/api/users', {
+    const response = await fetch('http://18.231.104.28/user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,6 +17,7 @@ export default function Cadastro() {
         email,
         password,
         name,
+        cpf
       }),
     });
 
@@ -23,6 +25,7 @@ export default function Cadastro() {
       alert('Error signing up.');
     } else {
       alert('Signed up successfully!');
+      navigation.navigate('Login');
       // Navegue para a próxima tela aqui.
     }
   }
@@ -40,6 +43,12 @@ export default function Cadastro() {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="cpf"
+        value={cpf}
+        onChangeText={setCpf}
       />
       <TextInput
         style={styles.input}
