@@ -3,6 +3,8 @@ import { Home } from "../screens/Home";
 import { Login } from "../screens/Login";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import Cadastro from "../screens/Cadastro";
+import { ProductsScreen } from "../screens/ProductsScreen";
+import { CadastraProduto } from "../screens/CadastraProduto";
 
 
 const { Screen, Navigator } = createNativeStackNavigator();
@@ -29,7 +31,18 @@ export function StackRoutes(){
       />
       <Screen 
         name="Home" 
-        component={Home} 
+        component={Home}
+        options={{ title: 'Mercados' }}
+      />
+      <Screen 
+        name="Products" 
+        component={ProductsScreen} 
+        options={{ title: 'Produtos cadastrados' }}
+      />
+      <Screen
+        name="CadastraProduto"
+        component={CadastraProduto}
+        options={{ title: 'Cadastrar produto' }}
       />
     </Navigator>
   )
