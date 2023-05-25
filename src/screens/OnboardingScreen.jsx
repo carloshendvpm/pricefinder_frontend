@@ -1,5 +1,6 @@
 import React from 'react';
 import Onboarding from 'react-native-onboarding-swiper';
+import {View, Image, StyleSheet} from 'react-native';
 
 const OnboardingScreen = ({ navigation }) => {
   return (
@@ -12,16 +13,19 @@ const OnboardingScreen = ({ navigation }) => {
       pages={[
         {
           backgroundColor: '#fff',
-          title: 'Bem-vindo(a) ao PriceFinder',
-          subtitle: 'O seu aplicativo de comparação e cadastro de preços de produtos e supermercados! Aqui você encontrará as melhores ofertas e poderá economizar tempo e dinheiro nas suas compras.',
+          title: 'Seja bem vindo ao \n PriceFinder',
+          subtitle: 'Economize tempo e dinheiro com as melhores ofertas em nosso aplicativo de comparação de preços de produtos e supermercados.',
         },
         {
-          backgroundColor: '#fe6e58',
-          title: 'Onboarding 2',
+          backgroundColor: '#CBDAFF',
+          image: <Image
+            source={require('../../assets/onboarding2.png')}
+          />,
+          title: 'Descubra as melhores ofertas com o PriceFinder',
           subtitle: 'Descrição detalhada para a segunda tela de boas-vindas.',
         },
         {
-          backgroundColor: '#999',
+          backgroundColor: '#407BFF',
           title: 'Onboarding 3',
           subtitle: 'Descrição detalhada para a terceira tela de boas-vindas.',
         },
