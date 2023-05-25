@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Keyboard, StyleSheet, View, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
+import { TextInput, Button, Snackbar } from 'react-native-paper';
+const API_URL = Platform.OS === 'ios' ? 'http://localhost:3000' : 'http://10.0.2.2:3000';
 
 export function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-  function teste(){
-    navigation.navigate('Home')
-  }
+
+  const handleDismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
 
   async function handleSubmit() {
-    const response = await fetch('http://localhost:3000/api/authenticate', {
+    const response = await fetch('http://18.231.104.28/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,31 +26,79 @@ export function Login({ navigation }) {
         password,
       }),
     });
-
+  
     if (!response.ok) {
-      alert('Error logging in.');
+      setLoginSuccess(false);
+      setLoginError(true);
+      setVisible(true);
+      Keyboard.dismiss()
     } else {
-      alert('Logged in successfully!');
+      const data = await response.json();
+      setLoginSuccess(true);
+      setLoginError(false);
+      setVisible(true);
+      Keyboard.dismiss()
+      setTimeout(() => {
+        navigation.navigate('Home');
+      }, 600);
+      //alert('Logged in successfully! Token: ' + data.token);
+      // Salvar o token em algum lugar seguro (como SecureStore) aqui.
     }
   }
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title="Login" onPress={teste} />
+    <>
+      <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}> 
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          mode='outlined'
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          mode='outlined'
+          right={<TextInput.Icon icon="eye" />}
+          secureTextEntry
+        />
+        <Button style={styles.button} mode='contained' onPress={() => navigation.navigate('Home')}>
+          Login
+        </Button>
+      </KeyboardAvoidingView>
+      
+    </TouchableWithoutFeedback>
+    <View>
+        {loginSuccess && (
+        <Snackbar
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          duration={2000}
+          style={{ backgroundColor: 'green' }}
+        >
+          Login bem-sucedido!
+        </Snackbar>
+      )}
+
+      {/* Se a mensagem de erro estiver visível, exibir Snackbar vermelho */}
+      {loginError && (
+        <Snackbar
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          duration={2000}
+          style={{ backgroundColor: 'red' }}
+        >
+          Login mal-sucedido. Verifique suas credenciais.
+        </Snackbar>
+      )}
     </View>
+    </>
   );
 }
 
@@ -55,10 +109,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingLeft: 10,
+    marginBottom: 15,
   },
+  button: {
+    marginTop: 20,
+  }
 });
