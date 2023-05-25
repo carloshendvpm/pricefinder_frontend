@@ -68,7 +68,7 @@ export function Login({ navigation }) {
           right={<TextInput.Icon icon="eye" />}
           secureTextEntry
         />
-        <Button style={styles.button} mode='contained' onPress={() => navigation.navigate('Home')}>
+        <Button style={styles.button} mode='contained' onPress={handleSubmit}>
           Login
         </Button>
       </KeyboardAvoidingView>
