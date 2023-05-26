@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Keyboard, StyleSheet, View, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
-import { TextInput, Button, Snackbar } from 'react-native-paper';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TextInput, Button, Snackbar, Text } from 'react-native-paper';
 const API_URL = Platform.OS === 'ios' ? 'http://localhost:3000' : 'http://10.0.2.2:3000';
 
 export function Login({ navigation }) {
@@ -9,10 +10,15 @@ export function Login({ navigation }) {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
 
 
   const handleDismissKeyboard = () => {
     Keyboard.dismiss();
+  };
+
+  const toggleHidePassword = () => {
+    setHidePassword(!hidePassword);
   };
 
   async function handleSubmit() {
@@ -52,8 +58,9 @@ export function Login({ navigation }) {
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}> 
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          label="Email"
           value={email}
+          activeOutlineColor='blue'
           onChangeText={setEmail}
           mode='outlined'
           keyboardType="email-address"
@@ -61,14 +68,18 @@ export function Login({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholder="Password"
+          label="Password"
           value={password}
           onChangeText={setPassword}
+          activeOutlineColor='blue'
           mode='outlined'
-          right={<TextInput.Icon icon="eye" />}
-          secureTextEntry
+          right={<TextInput.Icon icon={hidePassword ? 'eye' : 'eye-off'} onPress={toggleHidePassword}/>}
+          secureTextEntry={hidePassword}
         />
-        <Button style={styles.button} mode='contained' onPress={handleSubmit}>
+        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+          <Text style={styles.subTxt}>Não possui conta? Cadastre-se</Text>
+        </TouchableOpacity>
+        <Button style={styles.button} buttonColor='#407BFF' mode='contained' onPress={handleSubmit}>
           Login
         </Button>
       </KeyboardAvoidingView>
@@ -113,5 +124,9 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
+  },
+  subTxt: {
+    alignSelf: 'center',
+    color: '#407BFF',
   }
 });
