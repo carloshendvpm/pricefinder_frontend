@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Keyboard, StyleSheet, View, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { TextInput, Button, Snackbar, Text } from 'react-native-paper';
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:3000' : 'http://10.0.2.2:3000';
 
 export function Login({ navigation }) {
   const [email, setEmail] = useState('');
