@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, Image, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { TextInput, Button } from 'react-native-paper';
 
 export default function SignupScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
+
+  const handleDismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
 
   async function handleSubmit() {
     const response = await fetch('http://18.231.104.28/user', {
@@ -31,34 +38,46 @@ export default function SignupScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="cpf"
-        value={cpf}
-        onChangeText={setCpf}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title="Sign Up" onPress={handleSubmit} />
-    </View>
+    <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+      <ScrollView>
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <Image
+              source={require('../../assets/signup.png')}
+              style={{ width: 200, height: 200, alignSelf: 'center', marginBottom:20 }}
+          />
+          <TextInput
+            style={styles.input}
+            label="Name"
+            mode='outlined'
+            value={name}
+            onChangeText={setName}
+          />
+          <TextInput
+            style={styles.input}
+            label="Email"
+            mode='outlined'
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={styles.input}
+            label="cpf"
+            mode='outlined'
+            value={cpf}
+            onChangeText={setCpf}
+          />
+          <TextInput
+            style={styles.input}
+            label="Password"
+            mode='outlined'
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+          <Button mode='contained-tonal' onPress={handleSubmit}>Cadastrar</Button>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -69,10 +88,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
     marginBottom: 20,
-    paddingLeft: 10,
   },
 });
