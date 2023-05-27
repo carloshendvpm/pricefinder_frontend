@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, Text } from 'react-native-paper';
 
 export default function SignupScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -21,10 +21,10 @@ export default function SignupScreen({ navigation }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email,
-        password,
         name,
-        cpf
+        email,
+        cpf,
+        password
       }),
     });
 
@@ -33,18 +33,14 @@ export default function SignupScreen({ navigation }) {
     } else {
       alert('Signed up successfully!');
       navigation.navigate('Login');
-      // Navegue para a próxima tela aqui.
     }
   }
 
   return (
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
-      <ScrollView>
-        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-          <Image
-              source={require('../../assets/signup.png')}
-              style={{ width: 200, height: 200, alignSelf: 'center', marginBottom:20 }}
-          />
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ScrollView>
+          <Text>Se cadastre agora mesmo e comece a economizar</Text>
           <TextInput
             style={styles.input}
             label="Name"
@@ -58,10 +54,12 @@ export default function SignupScreen({ navigation }) {
             mode='outlined'
             value={email}
             onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize='none'
           />
           <TextInput
             style={styles.input}
-            label="cpf"
+            label="CPF"
             mode='outlined'
             value={cpf}
             onChangeText={setCpf}
@@ -75,8 +73,8 @@ export default function SignupScreen({ navigation }) {
             secureTextEntry
           />
           <Button mode='contained-tonal' onPress={handleSubmit}>Cadastrar</Button>
+          </ScrollView>
         </KeyboardAvoidingView>
-      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
@@ -86,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+    marginVertical: 40
   },
   input: {
     marginBottom: 20,
