@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, KeyboardAvoidingView, Keyboard} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Button, TextInput } from 'react-native-paper';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-
 
 export function CadastraProduto({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -16,10 +15,27 @@ export function CadastraProduto({ navigation }) {
   const [eanEditable, setEanEditable] = useState(false);
   const [editEan, setEditEan] = useState(false);
   
-  const onProductSubmit = () => {
-    alert('tudo certo')
-  };
+  async function onProductSubmit() {
+    const response = await fetch('http://18.231.104.28/product', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        description,
+        ean,
+        market_id
+      }),
+    });
 
+    if (!response.ok) {
+      alert('Erro ao cadastrar produto .');
+    } else {
+      alert('Produto cadastrado com sucesso!');
+      navigation.goBack();
+    }
+  }
 
   const route = useRoute();
   const { market_id } = route.params;
@@ -64,15 +80,28 @@ export function CadastraProduto({ navigation }) {
   
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} label='Name' value={name} onChangeText={setName} />
-      <TextInput style={styles.input} label='Description' value={description} onChangeText={setDescription} />
       <TextInput 
+        style={styles.input} 
+        mode='outlined' 
+        label='Name' 
+        value={name} 
+        onChangeText={setName} 
+      />
+      <TextInput 
+        style={styles.input} 
+        mode='outlined' 
+        label='Description' 
+        value={description} 
+        onChangeText={setDescription} 
+      />
+      <TextInput 
+        mode='outlined'
         label='EAN' 
         value={ean} 
         onChangeText={setEan} 
         keyboardType='numeric' 
         editable={eanEditable}
-        onTouchStart={handleEanPress} // Alert when user tries to edit EAN
+        onTouchStart={handleEanPress}
       />
 
       {scannerActive && (
