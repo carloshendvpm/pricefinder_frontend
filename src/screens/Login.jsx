@@ -11,7 +11,6 @@ export function Login({ navigation }) {
   const [visible, setVisible] = useState(false);
   const [hidePassword, setHidePassword] = useState(true);
 
-
   const handleDismissKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -44,7 +43,7 @@ export function Login({ navigation }) {
       setVisible(true);
       Keyboard.dismiss()
       setTimeout(() => {
-        navigation.navigate('Home');
+        navigation.replace('Home');
       }, 600);
       //alert('Logged in successfully! Token: ' + data.token);
       // Salvar o token em algum lugar seguro (como SecureStore) aqui.
@@ -59,7 +58,7 @@ export function Login({ navigation }) {
           style={styles.input}
           label="Email"
           value={email}
-          activeOutlineColor='blue'
+          activeOutlineColor='#407BFF'
           onChangeText={setEmail}
           mode='outlined'
           keyboardType="email-address"
@@ -70,7 +69,7 @@ export function Login({ navigation }) {
           label="Password"
           value={password}
           onChangeText={setPassword}
-          activeOutlineColor='blue'
+          activeOutlineColor='#407BFF'
           mode='outlined'
           right={<TextInput.Icon icon={hidePassword ? 'eye' : 'eye-off'} onPress={toggleHidePassword}/>}
           secureTextEntry={hidePassword}
