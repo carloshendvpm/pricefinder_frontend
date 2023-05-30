@@ -85,7 +85,7 @@ export function Login({ navigation }) {
           />
           <TextInput
             style={styles.input}
-            label="Password"
+            label="Senha"
             value={password}
             onChangeText={setPassword}
             activeOutlineColor="#407BFF"
@@ -114,7 +114,7 @@ export function Login({ navigation }) {
             mode="contained"
             onPress={handleSubmit}
           >
-            Login
+            Entrar
           </Button>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
