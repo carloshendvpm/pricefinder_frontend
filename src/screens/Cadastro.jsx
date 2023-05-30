@@ -72,10 +72,11 @@ export default function SignupScreen({ navigation }) {
           />
           <TextInput
             style={styles.input}
-            label="Name"
+            label="Nome"
             mode="outlined"
             value={name}
             onChangeText={setName}
+            activeOutlineColor="#407BFF"
           />
           <TextInput
             style={styles.input}
@@ -85,6 +86,7 @@ export default function SignupScreen({ navigation }) {
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
+            activeOutlineColor="#407BFF"
           />
           <TextInput
             style={styles.input}
@@ -92,13 +94,15 @@ export default function SignupScreen({ navigation }) {
             mode="outlined"
             value={cpf}
             onChangeText={setCpf}
+            activeOutlineColor="#407BFF"
           />
           <TextInput
             style={styles.input}
-            label="Password"
+            label="Senha"
             mode="outlined"
             value={password}
             onChangeText={setPassword}
+            activeOutlineColor="#407BFF"
              right={
               <TextInput.Icon
                 icon={hidePassword ? "eye" : "eye-off"}
