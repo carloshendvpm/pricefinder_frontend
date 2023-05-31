@@ -1,92 +1,166 @@
-import React, { useState } from 'react';
-import { StyleSheet, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { TextInput, Button, Text } from 'react-native-paper';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Keyboard,
+  View,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { TextInput, Button, Text, Snackbar } from "react-native-paper";
+import { Image } from "react-native";
 
 export default function SignupScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [cpf, setCpf] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
 
   const handleDismissKeyboard = () => {
     Keyboard.dismiss();
   };
 
+  const toggleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
 
   async function handleSubmit() {
-    const response = await fetch('http://18.231.104.28/user', {
-      method: 'POST',
+    const response = await fetch("http://18.231.104.28/user", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name,
         email,
         cpf,
-        password
+        password,
       }),
     });
 
     if (!response.ok) {
-      alert('Error signing up.');
+      setRegisterSuccess(false);
+      setRegisterError(true);
+      setVisible(true);
+      Keyboard.dismiss();
     } else {
-      alert('Signed up successfully!');
-      navigation.navigate('Login');
+      const data = await response.json();
+      setRegisterSuccess(true);
+      setRegisterError(false);
+      setVisible(true);
+      Keyboard.dismiss();
+      setTimeout(() => {
+        navigation.navigate("Login");
+      }, 600);
     }
   }
-
   return (
+    <>
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
-      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <ScrollView>
-          <Text>Se cadastre agora mesmo e comece a economizar</Text>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
+        <ScrollView style={styles.view}>
+          <Image
+            source={require("../../assets/logo-azul.png")}
+            style={styles.image}
+          />
           <TextInput
             style={styles.input}
-            label="Name"
-            mode='outlined'
+            label="Nome"
+            mode="outlined"
             value={name}
             onChangeText={setName}
+            activeOutlineColor="#407BFF"
           />
           <TextInput
             style={styles.input}
             label="Email"
-            mode='outlined'
+            mode="outlined"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
-            autoCapitalize='none'
+            autoCapitalize="none"
+            activeOutlineColor="#407BFF"
           />
           <TextInput
             style={styles.input}
             label="CPF"
-            mode='outlined'
+            mode="outlined"
             value={cpf}
             onChangeText={setCpf}
+            activeOutlineColor="#407BFF"
           />
           <TextInput
             style={styles.input}
-            label="Password"
-            mode='outlined'
+            label="Senha"
+            mode="outlined"
             value={password}
             onChangeText={setPassword}
-            secureTextEntry
+            activeOutlineColor="#407BFF"
+             right={
+              <TextInput.Icon
+                icon={hidePassword ? "eye" : "eye-off"}
+                onPress={toggleHidePassword}
+              />
+            }
+            secureTextEntry={hidePassword}
           />
-          <Button mode='contained-tonal' onPress={handleSubmit}>Cadastrar</Button>
-          </ScrollView>
-        </KeyboardAvoidingView>
+          <Button 
+           buttonColor="#407BFF"
+            mode="contained" onPress={handleSubmit}>
+            Cadastrar
+          </Button>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
+     <View>
+     {registerSuccess && (
+       <Snackbar
+         visible={visible}
+         onDismiss={() => setVisible(false)}
+         duration={2000}
+         style={{ backgroundColor: "green" }}
+       >
+         Cadastro bem-sucedido!
+       </Snackbar>
+     )}
+
+     {/* Se a mensagem de erro estiver visível, exibir Snackbar vermelho */}
+     {registerError && (
+       <Snackbar
+         visible={visible}
+         onDismiss={() => setVisible(false)}
+         duration={2000}
+         style={{ backgroundColor: "red" }}
+       >
+         Cadastro mal-sucedido. Verifique suas credenciais.
+       </Snackbar>
+     )}
+   </View>
+   </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-    marginVertical: 40
+    justifyContent: "center",
+    padding: 35,
+    paddingVertical: 50,
   },
   input: {
-    marginBottom: 20,
+    marginBottom: 15,
+  },
+  image: {
+    marginBottom:2,
+  },
+  view: {
+    paddingHorizontal: 15,
   },
 });
