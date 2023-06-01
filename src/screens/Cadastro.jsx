@@ -66,10 +66,9 @@ export default function SignupScreen({ navigation }) {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <ScrollView style={styles.view}>
-          <Image
-            source={require("../../assets/logo-azul.png")}
-            style={styles.image}
-          />
+         <Text style={styles.text}>
+          Cadastre-se
+         </Text>
           <TextInput
             style={styles.input}
             label="Nome"
@@ -111,7 +110,7 @@ export default function SignupScreen({ navigation }) {
             }
             secureTextEntry={hidePassword}
           />
-          <Button 
+          <Button style={styles.button}
            buttonColor="#407BFF"
             mode="contained" onPress={handleSubmit}>
             Cadastrar
@@ -163,4 +162,12 @@ const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 15,
   },
+  text:{
+    fontSize:22,
+    fontWeight: "bold",
+    paddingBottom: 20,
+  },
+  button:{
+    marginTop:20
+  }
 });
