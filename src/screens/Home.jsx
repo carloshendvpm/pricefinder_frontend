@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import { View, FlatList, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import MarketItem from '../components/MarketItem';
@@ -8,7 +8,8 @@ export function Home({ navigation }) {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
+  useEffect(
+    useCallback(() => {
     fetch('http://18.231.104.28/market')
       .then(response => response.json())
       .then(data => {
@@ -17,8 +18,8 @@ export function Home({ navigation }) {
       .catch(error => {
         console.error(error);
       });
-  }, []);
-
+  }, [])
+  );
   const handleSearch = () => {
     if (searchText.trim() !== '') {
       const results = supermarkets.filter(supermarket =>
