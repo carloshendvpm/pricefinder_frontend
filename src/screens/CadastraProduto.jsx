@@ -10,6 +10,7 @@ export function CadastraProduto({ navigation }) {
   const [ean, setEan] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
   const [image, setImage] = useState(null);
   const [scannerActive, setScannerActive] = useState(true);
   const [eanEditable, setEanEditable] = useState(false);
@@ -25,7 +26,8 @@ export function CadastraProduto({ navigation }) {
         name,
         description,
         ean,
-        market_id
+        market_id,
+        price,
       }),
     });
 
@@ -94,6 +96,14 @@ export function CadastraProduto({ navigation }) {
         label='Descrição' 
         value={description} 
         onChangeText={setDescription}
+        activeOutlineColor="#407BFF" 
+      />
+      <TextInput 
+        style={styles.input} 
+        mode='outlined' 
+        label='Preço R$' 
+        value={price} 
+        onChangeText={(text) => setPrice(parseFloat(text))}
         activeOutlineColor="#407BFF" 
       />
       <TextInput 
