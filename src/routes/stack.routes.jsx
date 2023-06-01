@@ -5,7 +5,7 @@ import OnboardingScreen from "../screens/OnboardingScreen";
 import Cadastro from "../screens/Cadastro";
 import { ProductsScreen } from "../screens/ProductsScreen";
 import { CadastraProduto } from "../screens/CadastraProduto";
-
+import { ProductDetails } from "../screens/ProductDetails";
 
 const { Screen, Navigator } = createNativeStackNavigator();
 
@@ -43,6 +43,11 @@ export function StackRoutes(){
         name="CadastraProduto"
         component={CadastraProduto}
         options={{ title: 'Cadastrar produto' }}
+      />
+      <Screen
+        name="ProductDetails"
+        component={ProductDetails}
+        options={{ title: 'Detalhes do produto' }}
       />
     </Navigator>
   )
