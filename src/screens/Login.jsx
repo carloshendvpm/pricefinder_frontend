@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     color: "#407BFF",
   },
   image: {
-    marginBottom: 20,
-    marginTop:0
+    marginBottom:30,
+
   },
 });

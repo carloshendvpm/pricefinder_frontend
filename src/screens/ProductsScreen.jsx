@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { View, TextInput, FlatList, StyleSheet } from 'react-native';
+import { View, TextInput, FlatList, StyleSheet,TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Button, Text } from 'react-native-paper';
 import { ProductItem } from '../components/ProductItem';
 import { useFocusEffect } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 export function ProductsScreen({ navigation }) {
   const route = useRoute();
@@ -45,7 +46,9 @@ export function ProductsScreen({ navigation }) {
           onChangeText={text => setSearchText(text)}
           value={searchText}
         />
-        <Button onPress={handleSearch} mode='contained-tonal' style={styles.searchButton}>Pesquisar</Button>
+       <TouchableOpacity onPress={handleSearch} style={styles.searchIconContainer}>
+          <Ionicons name="search" size={24} color="black" />
+        </TouchableOpacity>
       </View>
       <Button mode='contained-tonal' onPress={() => navigation.navigate('CadastraProduto', { market_id })} style={styles.button}>Adicionar novo produto</Button>
       {searchText.trim() !== '' && searchResults.length > 0 ? (
