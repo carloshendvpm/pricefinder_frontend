@@ -83,16 +83,18 @@ export function CadastraProduto({ navigation }) {
       <TextInput 
         style={styles.input} 
         mode='outlined' 
-        label='Name' 
+        label='Nome do Produto' 
         value={name} 
-        onChangeText={setName} 
+        onChangeText={setName}
+        activeOutlineColor="#407BFF" 
       />
       <TextInput 
         style={styles.input} 
         mode='outlined' 
-        label='Description' 
+        label='Descrição' 
         value={description} 
-        onChangeText={setDescription} 
+        onChangeText={setDescription}
+        activeOutlineColor="#407BFF" 
       />
       <TextInput 
         mode='outlined'
@@ -102,6 +104,7 @@ export function CadastraProduto({ navigation }) {
         keyboardType='numeric' 
         editable={eanEditable}
         onTouchStart={handleEanPress}
+        activeOutlineColor="#407BFF"
       />
 
       {scannerActive && (
@@ -111,9 +114,9 @@ export function CadastraProduto({ navigation }) {
         />
       )}
 
-      {scanned && <Button mode='contained' style={styles.button} onPress={() => setScanned(false)}>Tap to Scan Again</Button>}
+      {scanned && <Button mode='contained' style={styles.button} onPress={() => setScanned(false)}>Toque para scanear novamente</Button>}
 
-      <Button style={styles.button} mode='contained' onPress={onProductSubmit}>Submit</Button>
+      <Button style={styles.button} mode='contained' onPress={onProductSubmit}>Cadastrar</Button>
     </View>
   );
 }
