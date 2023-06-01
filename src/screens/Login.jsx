@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { TextInput, Button, Snackbar, Text } from "react-native-paper";
 import { Image, TouchableHighlight } from "react-native";
 
@@ -67,7 +66,7 @@ export function Login({ navigation }) {
       <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
         <KeyboardAvoidingView
           style={styles.container}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <Image
             source={require("../../assets/logo-azul.png")}
@@ -150,7 +149,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    padding: 35,
+    padding: 20,
   },
   input: {
     marginBottom: 15,
@@ -163,7 +162,9 @@ const styles = StyleSheet.create({
     color: "#407BFF",
   },
   image: {
-    marginBottom:30,
-
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+    marginBottom: -20,
   },
 });
