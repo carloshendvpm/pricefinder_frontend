@@ -1,4 +1,4 @@
-# PriceFinder - README
+# PriceFinder 
 
 ![image](https://github.com/carloshendvpm/pricefinder_frontend/assets/80500801/66efb508-8bfc-48d5-9151-a6950af3726e)
 
