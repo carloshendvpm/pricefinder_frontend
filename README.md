@@ -23,7 +23,7 @@ Siga estas etapas simples para começar a usar o PriceFinder:
 1. **Clone o Repositório:**
 
    ```bash
-   git clone https://github.com/seu-usuario/PriceFinder.git
+   git clone https://github.com/carloshendvpm/pricefinder_frontend
    cd PriceFinder
    ```
 
